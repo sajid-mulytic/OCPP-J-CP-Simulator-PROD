@@ -65,7 +65,7 @@
               id="endp"
               type="text"
               placeholder="Endpoint URL"
-              value="wss://ocpp.evfirst.ca/ocpp/"
+              value="wss://ocpp-dev.evfirst.ca/ocpp/"
             />
             <span>Charge Point Id (BRM_02, BTP_01, ETP_01, PSN_01, PSN_02)</span
             ><input
@@ -571,6 +571,14 @@
                   var TM = JSON.stringify([3, id, { status: "Accepted" }]);
                   _websocket.send(TM);
                   break;
+                case "GetDiagnostics":
+                  var GD = JSON.stringify([3, id, { fileName: "abc.log" }]);
+                  _websocket.send(GD);
+                  break;
+                case "UpdateFirmware":
+                  var UF = JSON.stringify([3, id, {}]);
+                  _websocket.send(UF);
+                  break;
                 default:
                   var error = JSON.stringify([4, id]);
                   _websocket.send(error);
@@ -675,7 +683,7 @@
             transactionId: parseInt(ssid),
             idTag: idTag,
             timestamp: formatDate(new Date()),
-            meterStop: meterStopValue,
+            meterStop: meterStopValue * 1000,
           },
         ]);
         meterValueIndex = 0;
