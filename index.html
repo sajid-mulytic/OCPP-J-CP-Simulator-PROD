@@ -927,6 +927,15 @@
               var MV = JSON.stringify([2, id, "MeterValues", meterValue]);
               _websocket.send(MV);
               meterValueIndex++;
+	      
+	      if (meterValueIndex == 6) {
+	        stopTransaction(Number.parseInt($("#TransToStp").val()););
+	        $(".indicator").hide();
+	        $("#yellow").show();
+                meterValueIndex = 0;
+                clearInterval(meterValueInterval);
+	      }
+             
             } else {
               meterValueIndex = 0;
               clearInterval(meterValueInterval);
