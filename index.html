@@ -650,7 +650,7 @@
         _websocket.send(strtT);
       }
 
-      function stopTransaction(transaction_id = false) {
+      function stopTransaction(transaction_id = false, stopTransactionTimestamp = new Date()) {
         sessionStorage.setItem("LastAction", "stopTransaction");
         transaction_id == false
           ? (ssid = sessionStorage.getItem("TransactionId"))
@@ -682,7 +682,7 @@
           {
             transactionId: parseInt(ssid),
             idTag: idTag,
-            timestamp: formatDate(new Date()),
+            timestamp: stopTransactionTimestamp,
             meterStop: meterStopValue * 1000,
           },
         ]);
@@ -921,15 +921,16 @@
           meterValueInterval = setInterval(() => {
             if (meterValueIndex < meterValuesArr.length) {
               var meterValue = meterValuesArr[meterValueIndex];
+              var currentTimestamp = new Date().toISOString();
               meterValue.meterValue.forEach(
-                (e) => (e.timestamp = new Date().toISOString())
+                (e) => (e.timestamp = currentTimestamp)
               );
               var MV = JSON.stringify([2, id, "MeterValues", meterValue]);
               _websocket.send(MV);
               meterValueIndex++;
 	      
 	      if (meterValueIndex == 6) {
-	        stopTransaction(Number.parseInt($("#TransToStp").val()));
+	        stopTransaction(Number.parseInt($("#TransToStp").val()), currentTimestamp);
 	        $(".indicator").hide();
 	        $("#yellow").show();
                 meterValueIndex = 0;
