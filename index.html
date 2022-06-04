@@ -104,7 +104,7 @@
               id="reservationId"
               type="text"
               placeholder="Reservation Id"
-              value="1234"
+              value=""
             />
             <!-- <span>Meter Stop</span><input id="meterStop" type="text" placeholder="Meter Stop" value=""/> -->
             <!-- <span>Transaction Data</span><input id="transactionData" type="text" placeholder="Transaction Data" value=""/>
@@ -432,11 +432,14 @@
               if (la == "startTransaction") {
                 ddata = ddata[2];
                 //logMsg("Data exchange successful!");
+                //test
+                console.log(ddata)
 
                 var array = $.map(ddata, function (value, index) {
                   return [value];
                 });
                 var TransactionId = array[1];
+                var TransactionId = array[0];  // test
                 try {
                   var arr = JSON.parse(sessionStorage.getItem("TransactionId"));
                   arr.push(TransactionId);
@@ -624,6 +627,7 @@
       function Authorize() {
         sessionStorage.setItem("LastAction", "Authorize");
         var Auth = JSON.stringify([2, id, "Authorize", { idTag: idTag }]);
+        console.log(Auth)
         _websocket.send(Auth);
       }
 
