@@ -72,7 +72,7 @@
               id="CP"
               type="text"
               placeholder="Charge Point Id"
-              value="BRM_02"
+              value="388045025505073"
             />
             <span>Charge Point Vendor</span
             ><input
@@ -90,7 +90,7 @@
             />
             <!-- <span>Time Zone</span><input id="timeZone" type="text" placeholder="Time Zone" value=""/> -->
             <span>Id Tag</span
-            ><input id="idTag" type="text" placeholder="Id Tag" value="1467d7cd-7a78" />
+            ><input id="idTag" type="text" placeholder="Id Tag" value="0433ED2A3B7080" />
             <span>Status Notification (Charging, Finishing, Available)</span
             ><input
               id="statusNotification"
@@ -920,6 +920,7 @@
             "MeterValues",
             meterValuesArr[meterValueIndex],
           ]);
+          console.log('first MV', meterValuesArr)
           _websocket.send(firstMv);
           meterValueIndex++;
           meterValueInterval = setInterval(() => {
@@ -930,6 +931,7 @@
                 (e) => (e.timestamp = currentTimestamp)
               );
               var MV = JSON.stringify([2, id, "MeterValues", meterValue]);
+              console.log('next MV', meterValuesArr)
               _websocket.send(MV);
               meterValueIndex++;
 	      
